@@ -30,7 +30,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build # The folder the action should deploy.
+          folder: dist # The folder the action should deploy.
         # with:
         #   # 存儲庫中要部署的文件夾
         #   # 該步驟會將項目中 FOLDER 指定文件夾下的文件推送到 BRANCH 分支，作為 Github Pages 部署的內容
