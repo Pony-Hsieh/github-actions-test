@@ -1,0 +1,38 @@
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore: # 有時候不想要改個文件也觸發 github actions，可以用這個 ignore
+      - '**/*.md'
+
+jobs:
+  echo-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 在 $GITHUB_WORKSPACE 下簽出您的存儲庫，以便您的工作可以訪問它
+      - uses: actions/checkout@v3
+      # 在 Runner 上使用 shell 顯示出 Hello world
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+  build-and-deploy:
+    needs: [echo-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      #   run: |
+      #     npm ci
+      #     npm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build # The folder the action should deploy.
+        # with:
+        #   # 存儲庫中要部署的文件夾
+        #   # 該步驟會將項目中 FOLDER 指定文件夾下的文件推送到 BRANCH 分支，作為 Github Pages 部署的內容
+        #   branch: gh-pages # The branch the action should deploy to
+        #   folder: dist # The folder the action should deploy
